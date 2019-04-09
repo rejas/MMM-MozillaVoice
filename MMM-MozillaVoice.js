@@ -14,6 +14,14 @@ Module.register("MMM-MozillaVoice", {
 	requiresVersion: "2.1.0", // Required version of MagicMirror
 
 	start: function() {
+		const stm = SpeakToMe({
+			listener: listener
+		});
+
+		function listener(msg) {
+			console.log("listener", msg);
+		}
+		stm.listen();
 	},
 
 	getTemplate: function () {
@@ -27,7 +35,7 @@ Module.register("MMM-MozillaVoice", {
 	},
 
 	getScripts: function() {
-		return [];
+		return [this.file("node_modules/speaktome-api/build/stm_web.min.js")];
 	},
 
 	getStyles: function () {
