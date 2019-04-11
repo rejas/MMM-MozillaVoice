@@ -11,8 +11,8 @@ Module.register("MMM-MozillaVoice", {
 	defaults: {
 	},
 
-    lastDetected: "",
-    status: "init",
+	lastDetected: "",
+	status: "init",
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror
 
@@ -20,24 +20,24 @@ Module.register("MMM-MozillaVoice", {
 
 		const stm = SpeakToMe({
 			listener: (msg) => {
-                console.log("listener", msg);
-                if (msg.data && msg.data.length > 0) {
-                    this.lastDetected = msg.data[0].confidence + ": " + msg.data[0].text;
-                }
-                if (msg.state === "ready") {
-                    stm.listen();
-                }
-                this.status = msg.state;
-                this.updateDom();
-            }
+				console.log("listener", msg);
+				if (msg.data && msg.data.length > 0) {
+					this.lastDetected = msg.data[0].confidence + ": " + msg.data[0].text;
+				}
+				if (msg.state === "ready") {
+					stm.listen();
+				}
+				this.status = msg.state;
+				this.updateDom();
+			}
 		});
 
 		stm.listen();
 	},
 
-    getHeader: function () {
-        return "MMM-MozillaVoice";
-    },
+	getHeader: function () {
+		return "MMM-MozillaVoice";
+	},
 
 	getTemplate: function () {
 		return "MMM-MozillaVoice.njk"
