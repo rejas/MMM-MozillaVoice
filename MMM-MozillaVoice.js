@@ -11,18 +11,33 @@ Module.register("MMM-MozillaVoice", {
 	defaults: {
 	},
 
+    lastDetected: "",
+    status: "init",
+
 	requiresVersion: "2.1.0", // Required version of MagicMirror
 
 	start: function() {
+
 		const stm = SpeakToMe({
-			listener: listener
+			listener: (msg) => {
+                console.log("listener", msg);
+                if (msg.data && msg.data.length > 0) {
+                    this.lastDetected = msg.data[0].confidence + ": " + msg.data[0].text;
+                }
+                if (msg.state === "ready") {
+                    stm.listen();
+                }
+                this.status = msg.state;
+                this.updateDom();
+            }
 		});
 
-		function listener(msg) {
-			console.log("listener", msg);
-		}
 		stm.listen();
 	},
+
+    getHeader: function () {
+        return "MMM-MozillaVoice";
+    },
 
 	getTemplate: function () {
 		return "MMM-MozillaVoice.njk"
@@ -30,7 +45,8 @@ Module.register("MMM-MozillaVoice", {
 
 	getTemplateData: function () {
 		return {
-			voice: "TODO" //moment.duration(this.poweredOffTime).humanize(),
+		    status: this.status,
+			detected: this.lastDetected
 		}
 	},
 
