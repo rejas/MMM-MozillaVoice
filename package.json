@@ -13,6 +13,6 @@
     "speaktome-api": "^0.2.1"
   },
   "devDependencies": {
-    "eslint": "^5.15.3"
+    "eslint": "^9.32.0"
   }
 }
